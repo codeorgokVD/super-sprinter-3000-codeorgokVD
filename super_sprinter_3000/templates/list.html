@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title> Super Sprinter 3000{% block title %}{% endblock %} </title>
+    {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<h1> User Story Manager {% block header %} {% endblock %} </h1>
+{% block body %}
+<a href="{{ url_for('list_statuses') }}"><button type="submit" id="add_new_story_button">Add new User Story
+</button></a><br><br>
+{% if stories %}
+      <table border="1", cellpadding="10">
+          <h2><tr>
+              <th>ID</th>
+              <th>Story Title</th>
+              <th>User Story</th>
+              <th>Acceptance Criteria</th>
+              <th>Business Value</th>
+              <th>Estimated Time</th>
+              <th>Status</th>
+              <th>Update</th>
+              <th>Remove</th>
+          </tr></h2>
+  {% for story in stories %}
+          <tr>
+              <td>{{ story.id }}</td>
+              <td>{{ story.title }}</td>
+              <td>{{ story.user_story }}</td>
+              <td>{{ story.acceptance_criteria }}</td>
+              <td>{{ story.business_value }}</td>
+              <td>{{ story.estimated_time }}</td>
+              <td>{{ story.status }}</td>
+              <td><a href="{{url_for('get_story_to_update', story_id=story.id)}}"> &#9998;</a></td>
+              <td><a href="{{url_for('remove_story', story_id=story.id)}}"><i class="fa fa-trash"></i></a></td>
+          </tr>
+  {% endfor %}
+      </table>
+{% else %}
+<em>Unbelievable.  No entries here so far</em>
+{% endif %}
+{% endblock %}
+</body>
+</html>

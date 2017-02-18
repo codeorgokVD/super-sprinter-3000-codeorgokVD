@@ -1,0 +1,4 @@
+graft super_sprinter_3000/templates
+graft super_sprinter_3000/static
+include super_sprinter_3000/connectdatabase.py
+include super_sprinter_3000/models.py
