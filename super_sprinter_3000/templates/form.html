@@ -1,31 +1,57 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap2.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Super Sprinter 3000 {{header}}</title>
 </head>
 <body>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">User Story Manager</a>
+            </div>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/form">Add new story</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+<div class="container-fluid">
 <h1> User Story Manager {{header}}</h1>
+    <div class="col-lg-6">
     <form action="/story/{{story.id}}" method="POST">
         <label for="story_title">Story Title</label><br>
-        <input type=text size=50 name="story_title" id="story_title" value="{{story.title}}"><br>
+        <input class="form-control" type=text size=50 name="story_title" id="story_title" value="{{story.title}}"
+               placeholder="Title of the story"><br>
         <label for="user_story">User Story</label><br>
-        <textarea name="user_story" id="user_story" rows=5 cols=50>{{story.user_story}}</textarea><br>
+        <textarea class="form-control" name="user_story" id="user_story" rows=5 cols=50
+                  placeholder="Describe user story">{{story.user_story}}</textarea><br>
         <label for="acceptance_criteria">Acceptance Criteria</label><br>
-        <textarea name="acceptance_criteria" id="acceptance_criteria" rows=5 cols=50>{{story.acceptance_criteria}}</textarea><br>
+        <textarea class="form-control" name="acceptance_criteria" id="acceptance_criteria" rows=5 cols=50
+                  placeholder="Add criterias">{{story.acceptance_criteria}}</textarea><br>
         <label for="business_value">Business Value</label><br>
-        <input type="number" name="business_value" id="business_value" min="100" max="1500" step="100" size="6"
+        <input type="number" class="form-control" name="business_value" id="business_value" min="100" max="1500" step="100" size="6"
                value="{{story.business_value}}"><br>
         <label for="estimated_time">Estimation (h)</label><br>
-        <input type="number" name="estimated_time" id="estimated_time" min="0.5" max="40" step="0.5" size="6"
+        <input type="number" class="form-control" name="estimated_time" id="estimated_time" min="0.5" max="40" step="0.5" size="6"
                value="{{story.estimated_time}}"><br>
         <label for="status">Status</label><br>
-          <select name="status" id="status">
+          <select name="status" id="status" class="form-control">
               {% for option in statuses %}
-              <option> {{ option.status }} </option><br>
+              <option {% if selected_status.status == option.status %} selected {% endif %}> {{ option.status }} </option><br>
               {% endfor %}
           </select><br><br>
-        <button type="submit" id="submit_form_button">{{button_label}}</button>
+        <button class="btn btn-primary btn-lg" type="submit" id="submit_form_button">{{button_label}}</button>
     </form>
+</div>
+</div>
 </body>
 </html>

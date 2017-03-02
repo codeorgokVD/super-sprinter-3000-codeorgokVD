@@ -25,14 +25,7 @@ def initdb_command():
     status = ["Planning", "To Do", "In Progress", "Review", "Done"]
     for stat in status:
         Options.create(status=stat)
-    print('Initialized the database and insterted statuses to Options table.')
-
-
-@app.teardown_appcontext
-def close_db(error):
-    """Closes the database again at the end of the request."""
-    if hasattr(g, 'postgre_db'):
-        g.postgre_db.close()
+    print('Initialized the database and inserted statuses to Options table.')
 
 
 @app.route('/list', methods=['GET'])
@@ -45,8 +38,10 @@ def list_stories():
 @app.route('/form', methods=['GET'])
 def list_statuses():
     story=[]
+    selected_status =""
     statuses = Options.select()
-    return render_template('form.html', story=story, statuses=statuses, header="- Add new Story", button_label="Create")
+    return render_template('form.html', story=story, statuses=statuses, header="- Add new Story",
+                           selected_status=selected_status, button_label="Create")
 
 
 @app.route('/story/', methods=['POST'])
@@ -63,8 +58,10 @@ def add_story():
 @app.route('/story/<story_id>', methods=['GET'])
 def get_story_to_update(story_id):
     story = Stories.select().where(Stories.id == story_id).get()
+    selected_status = Stories.select().where(Stories.id==story_id).get()
     statuses = Options.select()
-    return render_template('form.html', story=story, statuses=statuses, header="- Edit Story", button_label="Update")
+    return render_template('form.html', story=story, statuses=statuses, header="- Edit Story",
+                           selected_status=selected_status, button_label="Update")
 
 
 @app.route('/story/<story_id>', methods=['POST'])
